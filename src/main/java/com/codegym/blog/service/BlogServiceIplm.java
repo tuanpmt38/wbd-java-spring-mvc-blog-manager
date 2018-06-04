@@ -1,0 +1,50 @@
+package com.codegym.blog.service;
+
+import com.codegym.blog.model.Blog;
+import com.codegym.blog.model.Category;
+import com.codegym.blog.repository.BlogRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
+public class BlogServiceIplm implements BlogService {
+
+    @Autowired
+    private BlogRepository blogRepository;
+
+//    @Override
+//    public Page<Blog> findAll(Pageable pageable) {
+//        return blogRepository.findAll(pageable);
+//    }
+
+
+    @Override
+    public Iterable findAllByCategory(Category category) {
+        return blogRepository.findAllByCategory(category);
+    }
+
+    @Override
+    public Iterable<Blog> findAll() {
+        return blogRepository.findAll();
+    }
+
+    @Override
+    public Blog findById(Long id) {
+        return blogRepository.findOne(id);
+    }
+
+    @Override
+    public void save(Blog blog) {
+        blogRepository.save(blog);
+    }
+
+    @Override
+    public void delete(Long id) {
+        blogRepository.delete(id);
+    }
+
+//    @Override
+//    public Page<Blog> findAllByFirstName(String firstname, Pageable pageable) {
+//        return blogRepository.findAllByFirstNameContaining(firstname, pageable);
+//    }
+}
