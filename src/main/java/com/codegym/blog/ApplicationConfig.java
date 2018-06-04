@@ -60,6 +60,7 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter implements Applic
     //Thymeleaf Configuration
     @Bean
     public SpringResourceTemplateResolver templateResolver(){
+
         SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
         templateResolver.setApplicationContext(applicationContext);
         templateResolver.setPrefix("/WEB-INF/views");
@@ -77,6 +78,7 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter implements Applic
 
     @Bean
     public ThymeleafViewResolver viewResolver(){
+
         ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
         viewResolver.setCharacterEncoding("UTF-8");
         viewResolver.setTemplateEngine(templateEngine());
@@ -92,6 +94,7 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter implements Applic
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
         em.setPackagesToScan(new String[]{"com.codegym.blog.model"});
@@ -104,10 +107,10 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter implements Applic
 
     @Bean
     public DataSource dataSource(){
+
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
         dataSource.setUrl("jdbc:mysql://localhost:3306/new_blog1?useUnicode=yes&characterEncoding=UTF-8");
-//        dataSource.setUrl("jdbc:mysql://localhost:3306/myblog?");
         dataSource.setUsername( "root" );
         dataSource.setPassword( "root" );
         return dataSource;
@@ -115,12 +118,14 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter implements Applic
 
     @Bean
     public PlatformTransactionManager transactionManager(EntityManagerFactory emf){
+
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(emf);
         return transactionManager;
     }
 
     Properties additionalProperties() {
+
         Properties properties = new Properties();
         properties.setProperty("hibernate.hbm2ddl.auto", "update");
         properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");

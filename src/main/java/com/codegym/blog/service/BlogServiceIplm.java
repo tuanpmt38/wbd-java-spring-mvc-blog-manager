@@ -17,16 +17,10 @@ public class BlogServiceIplm implements BlogService {
         return blogRepository.findAll(pageable);
     }
 
-
     @Override
     public Iterable findAllByCategory(Category category) {
         return blogRepository.findAllByCategory(category);
     }
-
-//    @Override
-//    public Iterable<Blog> findAll() {
-//        return blogRepository.findAll();
-//    }
 
     @Override
     public Blog findById(Long id) {
@@ -43,8 +37,8 @@ public class BlogServiceIplm implements BlogService {
         blogRepository.delete(id);
     }
 
-//    @Override
-//    public Page<Blog> findAllByFirstNameContaining(String firstname, Pageable pageable) {
-//        return blogRepository.findAllByFirstNameContaining(firstname,pageable);
-//    }
+    @Override
+    public Page<Blog> findAllByTitleContaining(String title, Pageable pageable) {
+        return blogRepository.findAllByTitleContaining(title, pageable);
+    }
 }

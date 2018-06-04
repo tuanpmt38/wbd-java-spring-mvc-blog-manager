@@ -11,13 +11,11 @@ public interface BlogService {
 
     Iterable findAllByCategory(Category category);
 
-//    Iterable <Blog> findAll();
-
     Blog findById (Long id);
 
     void save(Blog blog);
 
     void delete (Long id);
 
-//    Page<Blog> findAllByFirstNameContaining(String firstname, Pageable pageable);
+    Page<Blog> findAllByTitleContaining(String title, Pageable pageable);
 }

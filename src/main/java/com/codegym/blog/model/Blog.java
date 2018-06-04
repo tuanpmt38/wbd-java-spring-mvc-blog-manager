@@ -26,7 +26,6 @@ public class Blog {
         this.content = content;
     }
 
-
     @Override
     public String toString() {
         return String.format("Blog[id=%d, title=%s, content = %s]", id, title, content);
@@ -63,5 +62,4 @@ public class Blog {
     public void setCategory(Category category) {
         this.category = category;
     }
-
 }

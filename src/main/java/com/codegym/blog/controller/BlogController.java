@@ -27,24 +27,15 @@ public class BlogController {
         return categoryService.findAll();
     }
 
-//    @GetMapping("blogs")
-//    public ModelAndView listBlog(@RequestParam("search") Optional<String> search, Pageable pageable){
-//
-//        Page<Blog> blogs;
-//        if(search.isPresent()){
-//            blogs = blogService.findAllByFirstNameContaining(search.get(),pageable);
-//        }else {
-//            blogs= blogService.findAll(pageable);
-//        }
-//        ModelAndView modelAndView = new ModelAndView("/blog/list");
-//        modelAndView.addObject("blog", blogs);
-//        return modelAndView;
-//    }
-
     @GetMapping("blogs")
-    public ModelAndView listBlog(Pageable pageable) {
+    public ModelAndView listBlog(@RequestParam("search") Optional<String> search, Pageable pageable){
 
-        Page<Blog> blogs = blogService.findAll(pageable);
+        Page<Blog> blogs;
+        if(search.isPresent()){
+            blogs = blogService.findAllByTitleContaining(search.get(),pageable);
+        }else {
+            blogs= blogService.findAll(pageable);
+        }
         ModelAndView modelAndView = new ModelAndView("/blog/list");
         modelAndView.addObject("blog", blogs);
         return modelAndView;
