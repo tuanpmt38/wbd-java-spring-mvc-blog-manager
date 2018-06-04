@@ -7,11 +7,11 @@ import org.springframework.data.domain.Pageable;
 
 public interface BlogService {
 
-//    Page<Blog> findAll(Pageable pageable);
+    Page<Blog> findAll(Pageable pageable);
 
     Iterable findAllByCategory(Category category);
 
-    Iterable <Blog> findAll();
+//    Iterable <Blog> findAll();
 
     Blog findById (Long id);
 
@@ -19,5 +19,5 @@ public interface BlogService {
 
     void delete (Long id);
 
-//    Page<Blog> findAllByFirstName(String firstname, Pageable pageable);
+//    Page<Blog> findAllByFirstNameContaining(String firstname, Pageable pageable);
 }

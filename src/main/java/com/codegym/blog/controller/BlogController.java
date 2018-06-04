@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Optional;
+
 @Controller
 public class BlogController {
 
@@ -26,11 +28,11 @@ public class BlogController {
     }
 
 //    @GetMapping("blogs")
-//    public ModelAndView listBlog(@RequestParam("search") Optional<String> search,Pageable pageable){
+//    public ModelAndView listBlog(@RequestParam("search") Optional<String> search, Pageable pageable){
 //
 //        Page<Blog> blogs;
 //        if(search.isPresent()){
-//            blogs = blogService.findAllByFirstName(search.get(),pageable);
+//            blogs = blogService.findAllByFirstNameContaining(search.get(),pageable);
 //        }else {
 //            blogs= blogService.findAll(pageable);
 //        }
@@ -40,10 +42,9 @@ public class BlogController {
 //    }
 
     @GetMapping("blogs")
-    public ModelAndView listBlog() {
+    public ModelAndView listBlog(Pageable pageable) {
 
-//        Page<Blog> blogs = blogService.findAll();
-        Iterable<Blog> blogs = blogService.findAll();
+        Page<Blog> blogs = blogService.findAll(pageable);
         ModelAndView modelAndView = new ModelAndView("/blog/list");
         modelAndView.addObject("blog", blogs);
         return modelAndView;
@@ -51,6 +52,7 @@ public class BlogController {
 
     @GetMapping("/create-blog")
     public ModelAndView showCreateForm() {
+
         ModelAndView modelAndView = new ModelAndView("/blog/create");
         modelAndView.addObject("blog", new Blog());
         return modelAndView;
@@ -58,8 +60,8 @@ public class BlogController {
 
     @PostMapping("/create-blog")
     public ModelAndView create(@ModelAttribute("blog") Blog blog) {
-        blogService.save(blog);
 
+        blogService.save(blog);
         ModelAndView modelAndView = new ModelAndView("/blog/create");
         modelAndView.addObject("blog", new Blog());
         modelAndView.addObject("message", "create new blog successfully");
@@ -68,6 +70,7 @@ public class BlogController {
 
     @GetMapping("/edit-blog/{id}")
     public ModelAndView showFormEdit(@PathVariable Long id) {
+
         Blog blog = blogService.findById(id);
         if (blog != null) {
             ModelAndView modelAndView = new ModelAndView("/blog/edit");
@@ -81,6 +84,7 @@ public class BlogController {
 
     @PostMapping("update-blog")
     public ModelAndView update(@ModelAttribute("blog") Blog blog) {
+
         blogService.save(blog);
         ModelAndView modelAndView = new ModelAndView("/blog/edit");
         modelAndView.addObject("blog", blog);
@@ -90,6 +94,7 @@ public class BlogController {
 
     @GetMapping("/delete-blog/{id}")
     public ModelAndView showFormDelete(@PathVariable Long id) {
+
         Blog blog = blogService.findById(id);
         if (blog != null) {
             ModelAndView modelAndView = new ModelAndView("/blog/delete");
@@ -103,12 +108,14 @@ public class BlogController {
 
     @PostMapping("/delete-blog")
     public String delete(@ModelAttribute("blog") Blog blog) {
+
         blogService.delete(blog.getId());
         return "redirect:blogs";
     }
 
     @GetMapping("/view-blog/{id}")
     public ModelAndView view(@PathVariable Long id) {
+
         Blog blog = blogService.findById(id);
         if (blog != null) {
             ModelAndView modelAndView = new ModelAndView("/blog/view");

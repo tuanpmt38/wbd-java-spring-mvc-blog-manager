@@ -23,6 +23,7 @@ public class CategoryController {
 
     @GetMapping("/create-category")
     public ModelAndView createFormCategory(){
+
         ModelAndView modelAndView = new ModelAndView("/category/create");
         modelAndView.addObject("category", new Category());
         return modelAndView;
@@ -30,6 +31,7 @@ public class CategoryController {
 
     @PostMapping("/create-category")
     public ModelAndView create(@ModelAttribute ("category") Category category){
+
         ModelAndView modelAndView = new ModelAndView("/category/create");
         categoryService.save(category);
         modelAndView.addObject("category",category);
@@ -39,6 +41,7 @@ public class CategoryController {
 
     @GetMapping("/categories")
     public ModelAndView listCategory(){
+
         Iterable<Category> categories = categoryService.findAll();
         ModelAndView modelAndView = new ModelAndView("/category/list");
         modelAndView.addObject("category",categories);
@@ -47,6 +50,7 @@ public class CategoryController {
 
     @GetMapping("/update-category/{id}")
     public ModelAndView showFormEdit(@PathVariable Long id){
+
         Category category = categoryService.findById(id);
         if(category != null){
             ModelAndView modelAndView = new ModelAndView("/category/edit");
@@ -60,6 +64,7 @@ public class CategoryController {
 
     @PostMapping("/update-category")
     public ModelAndView update(@ModelAttribute ("category") Category category){
+
         categoryService.save(category);
         ModelAndView modelAndView = new ModelAndView("/category/edit");
         modelAndView.addObject("category", category);
@@ -69,6 +74,7 @@ public class CategoryController {
 
     @GetMapping("/delete-category/{id}")
     public ModelAndView showFormDelete(@PathVariable Long id){
+
         Category category = categoryService.findById(id);
         if(category != null){
             ModelAndView modelAndView = new ModelAndView("/category/delete");
@@ -82,12 +88,14 @@ public class CategoryController {
 
     @PostMapping("delete-category")
     public String delete(@ModelAttribute ("category") Category category){
+
         categoryService.remove(category.getId());
         return "redirect:categories";
     }
 
     @GetMapping("/view-category/{id}")
     public ModelAndView viewCategory(@PathVariable("id") Long id){
+
         Category category = categoryService.findById(id);
         if(category == null){
             ModelAndView modelAndView = new ModelAndView("error-404");
