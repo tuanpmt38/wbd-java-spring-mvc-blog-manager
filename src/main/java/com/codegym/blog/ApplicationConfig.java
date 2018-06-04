@@ -78,6 +78,7 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter implements Applic
     @Bean
     public ThymeleafViewResolver viewResolver(){
         ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
+        viewResolver.setCharacterEncoding("UTF-8");
         viewResolver.setTemplateEngine(templateEngine());
         return viewResolver;
     }
@@ -105,8 +106,8 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter implements Applic
     public DataSource dataSource(){
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/new_blog");
-//        dataSource.setUrl("jdbc:mysql://localhost:3306/myblog");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/new_blog1?useUnicode=yes&characterEncoding=UTF-8");
+//        dataSource.setUrl("jdbc:mysql://localhost:3306/myblog?");
         dataSource.setUsername( "root" );
         dataSource.setPassword( "root" );
         return dataSource;
@@ -130,4 +131,6 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter implements Applic
     public void addFormatters(FormatterRegistry registry) {
         registry.addFormatter(new CategoryFormatter(applicationContext.getBean(CategoryService.class)));
     }
+
+
 }
