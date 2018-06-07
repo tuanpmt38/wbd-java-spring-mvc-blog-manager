@@ -10,29 +10,12 @@
     <title>Blog Home - Start Bootstrap Template</title>
 
     <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
 
     <!-- Custom styles for this template -->
-    <link href="css/blog-home.css" rel="stylesheet">
+    <link href="../assets/css/style.css" rel="stylesheet">
     <style>
-        body {
-            padding-top: 54px;
-        }
 
-        @media (min-width: 992px) {
-            body {
-                padding-top: 56px;
-            }
-        }
-        .content-main{
-            padding-top: 50px;
-        }
-        .line-main{
-            width: 100%;
-            height: 1px;
-            background: #000;
-            padding: 0 5px;
-        }
     </style>
 </head>
 
@@ -40,47 +23,22 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-        <a class="navbar-brand" href="#"><h1>PMT</h1></a>
+        <a class="navbar-brand" href="/blogs"><h1>PMT</h1></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
+                <th:block th:each="category:${categories}">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Home
-                        <span class="sr-only">(current)</span>
+                    <a class="nav-link" th:text="${category.name}">
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">jQuery
-                        <span class="sr-only">(current)</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">CSS
-                        <span class="sr-only">(current)</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">HTML
-                        <span class="sr-only">(current)</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">C++
-                        <span class="sr-only">(current)</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Services</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
-                </li>
+                </th:block>
             </ul>
+        </div>
+        <div class="language">
+            <a href="?lang=en"><img src="../assets/img/en.png" alt=""></a> | <a href="?lang=vn"><img src="../assets/img/ar.png" alt=""></a>
         </div>
     </div>
 </nav>
@@ -93,18 +51,23 @@
         <div class="col-md-8 content-main">
 
             <h2>
-                <a href="/create-blog">create new blog</a>
+                <a href="/create-blog" th:text="#{create_lable_blog}"></a>
             </h2>
 
             <!-- Blog Post -->
             <th:block th:each="blogs:${blog}">
-                <p th:text="${blogs.category.name}"></p>
                 <div class="card mb-4">
+                    <div>
+                        <span class="span-card" th:text="#{category_lable}"></span>
+                        <p th:text="${blogs.category.name}"></p>
+                    </div>
                     <div class="card-body">
                         <h2 th:text="${blogs.title}" class="card-title"></h2>
-                        <a th:href="@{/edit-blog/__${blogs.id}__}" class="btn btn-primary">edit →</a>
-                        <a th:href="@{/delete-blog/__${blogs.id}__}" class="btn btn-primary">delete →</a>
-                        <a th:href="@{/view-blog/__${blogs.id}__}" class="btn btn-primary">xem tiep →</a>
+                        <span th:text="#{createDate_lable}"></span>
+                        <p th:text="${blogs.createDate}"></p>
+                        <a th:href="@{/edit-blog/__${blogs.id}__}" class="btn btn-primary" th:text="#{edit_lable}"> →</a>
+                        <a th:href="@{/delete-blog/__${blogs.id}__}" class="btn btn-primary" th:text="#{delete_lable}"> →</a>
+                        <a th:href="@{/view-blog/__${blogs.id}__}" class="btn btn-primary" th:text="#{view_lable}"> →</a>
                     </div>
                 </div>
                 <div class="line-main"></div>
@@ -112,9 +75,9 @@
             <!---->
             <ul class="pagination justify-content-center mb-4">
                 <div>
-                    <a th:href="@{'/blogs'(page=${blog.number - 1})}" th:if="${blog.hasPrevious()}">Previous</a>
+                    <a th:href="@{'/blogs'(page=${blog.number - 1})}" th:if="${blog.hasPrevious()}" th:text="#{previous_lable}"></a>
                     <span th:text="${blog.number + 1}"></span>/<span th:text="${blog.totalPages}"></span>
-                    <a th:href="@{'/blogs'(page=${blog.number + 1})}" th:if="${blog.hasNext()}">Next</a>
+                    <a th:href="@{'/blogs'(page=${blog.number + 2})}" th:if="${blog.hasNext()}" th:text="#{next_lable}">Next</a>
                 </div>
             </ul>
         </div>
@@ -122,12 +85,12 @@
 
             <!-- Search Widget -->
             <div class="card my-4">
-                <h5 class="card-header">Tìm kiếm</h5>
+                <h5 class="card-header" th:text="#{search_lable}"></h5>
                 <div class="card-body">
                     <form class="input-group">
-                            <input type="text" name="search" class="form-control" placeholder="ngôn ngữ lập trình...">
+                            <input type="text" name="search" class="form-control">
                             <span class="input-group-btn">
-                                <button class="btn btn-secondary" type="submit">Tìm kiếm!</button>
+                                <button class="btn btn-secondary" type="submit" th:text="#{search_lable}"></button>
                             </span>
                     </form>
                 </div>
@@ -135,7 +98,7 @@
 
             <!-- Categories Widget -->
             <div class="card my-4">
-                <h5 class="card-header">Thể loại</h5>
+                <h5 class="card-header" th:text="#{category_lable}"></h5>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-lg-6">
@@ -170,7 +133,7 @@
 
             <!-- Side Widget -->
             <div class="card my-4">
-                <h5 class="card-header">Admin</h5>
+                <h5 class="card-header" th:text="#{admin_lable}"></h5>
                 <div col-lg-3 col-sm-6>
                     <div class="card hovercard">
                         <div class="cardheader">
@@ -241,7 +204,7 @@
                     </div>
                 </div></div>
             <div class="card my-4">
-                <h5 class="card-header">
+                <h5 class="card-header" th:text="#{most_view_lable}">
                     Bài xem nhiều nhất
                 </h5>
                 <div class="project">
@@ -252,7 +215,7 @@
                     </span>
 
                     </figure>
-                    <a href="#" class="btn btn-primary">Xem tiếp →</a>
+                    <a href="#" class="btn btn-primary" th:text="#{view_lable}">Xem tiếp →</a>
                 </div>
                 <div class="project">
                     <figure class="img-responsive">
@@ -262,7 +225,7 @@
                     </span>
 
                     </figure>
-                    <a href="#" class="btn btn-primary">Xem tiếp →</a>
+                    <a href="#" class="btn btn-primary" th:text="#{view_lable}">Xem tiếp →</a>
                 </div>
             </div>
             <div class="card my-4">
@@ -290,9 +253,9 @@
 </footer>
 
 <!-- Bootstrap core JavaScript -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+<script src="../assets/js/jquery-3.2.1.slim.min.js" ></script>
+<script src="../assets/js/popper.min.js" ></script>
+<script src="../assets/js/js/bootstrap.min.js" ></script>
 
 </body>
 

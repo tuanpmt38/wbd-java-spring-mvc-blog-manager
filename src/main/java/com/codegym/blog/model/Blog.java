@@ -1,6 +1,8 @@
 package com.codegym.blog.model;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.util.Locale;
 
 @Entity
 @Table (name = "blogs")
@@ -15,15 +17,18 @@ public class Blog {
 
     private String content;
 
+    private LocalDate createDate = LocalDate.now();
+
     @ManyToOne
     @JoinColumn(name = "categories_id")
     private Category category;
 
     public Blog(){}
 
-    public Blog(String title, String content){
+    public Blog(String title, String content, LocalDate createDate){
         this.title = title;
         this.content = content;
+        this.createDate = createDate;
     }
 
     @Override
@@ -61,5 +66,13 @@ public class Blog {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public LocalDate getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(LocalDate createDate) {
+        this.createDate = createDate;
     }
 }

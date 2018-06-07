@@ -2,6 +2,7 @@ package com.codegym.blog.service;
 
 import com.codegym.blog.model.Category;
 import com.codegym.blog.repository.CategoryRepository;
+import com.codegym.blog.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class CategoryServiceImpl implements CategoryService {
@@ -28,4 +29,6 @@ public class CategoryServiceImpl implements CategoryService {
     public void remove(Long id) {
         categoryRepository.delete(id);
     }
+
+
 }
